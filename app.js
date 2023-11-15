@@ -64,15 +64,7 @@ fs.writeFile(filePath, "", (err) => {
   if (err) console.error(err);
   console.log("файл создан");
 });
-// app.get(routeTest, (req, res) => {
-//   fs.appendFile(
-//     filePath,
-//     `\nЛогируем ping по адресу localhost:${port}${routeTest}. Время: ${new Date()}`,
-//     (err) => {
-//       if (err) console.error(err);
-//       console.log("файл переписан");
-//     }
-//   );
+
 //   res.end("/test");
 // });
 // app.post(routeTest, (req, res) => {
