@@ -65,8 +65,6 @@ fs.writeFile(filePath, "", (err) => {
   console.log("файл создан");
 });
 
-//   res.end("/test");
-// });
 // app.post(routeTest, (req, res) => {
 //   console.log("Прошли по пути post/test");
 //   fs.appendFile(
