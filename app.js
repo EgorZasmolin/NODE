@@ -56,15 +56,7 @@ const routeSlash = "/";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(
-//   "css/bootstrap.css",
-//   express.static(
-//     path.join(
-//       __dirname,
-//       "public/css/bootstrap-5.3.2/dist/css/bootstrap.min.css"
-//     )
-//   )
-// );
+
 app.use(express.static(path.join(__dirname, "views")));
 app.use(favicon(__dirname + "/public/favicon.ico"));
 const filePath = path.join(__dirname, "tmp", "logger.txt");
