@@ -5,6 +5,7 @@ const fs = require("fs");
 const ejs = require("ejs");
 
 const app = express();
+const myRoutes = require("./routers/index_routers");
 const path = require("path");
 
 app.set("view engine", "ejs");
@@ -30,19 +31,14 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.static(path.join(__dirname, "views")));
 app.use(favicon(__dirname + "/public/favicon.ico"));
+
 const filePath = path.join(__dirname, "tmp", "logger.txt");
 fs.writeFile(filePath, "", (err) => {
   if (err) console.error(err);
   console.log("файл создан");
 });
 
-app.get("/test", (req, res) => {});
-
-app.post("/test", (req, res) => {
-  addLine("Пинганули /test");
-  console.log("прошли по пути test");
-  res.end("прошли post test");
-});
+app.use(myRoutes);
 
 function addLine(line) {
   line = line + " timestamp: " + new Date().toLocaleString();
@@ -61,21 +57,6 @@ app.use(function (req, res, next) {
   err.code = 404;
   next(err);
 });
-
-//production error handler
-// console.log(app.get("env"));
-if (app.get("env") != "development") {
-  app.use(function (err, req, res, next) {
-    res.status = 404;
-    let photo =
-      "https://www.elegantthemes.com/blog/wp-content/uploads/2020/08/000-http-error-codes.png";
-    res.render("error", { err, photo });
-  });
-} else {
-  app.use(function (err, req, res, next) {
-    console.log(app.get("env"), err.code, err.message);
-  });
-}
 
 app.listen(port, function () {
   console.log("Сервер запущен порт " + port);
