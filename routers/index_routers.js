@@ -2,26 +2,28 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
+  res.end("/");
 });
-router.post("/", function (req, res) {});
+router.post("/", function (req, res) {
+  res.end("/");
+});
 
-router.get("/register", function (req, res) {});
+router.get("/register", function (req, res) {
+  res.render("register.ejs");
+});
 router.post("/register", function (req, res) {});
 
-module.exports = router;
+router.get("/login", function (req, res) {
+  res.render("login.ejs");
+});
+router.post("/login", function (req, res) {});
 
-//production error handler
-// console.log(app.get("env"));
-// if (app.get("env") != "development") {
-//     app.use(function (err, req, res, next) {
-//       res.status = 404;
-//       let photo =
-//         "https://www.elegantthemes.com/blog/wp-content/uploads/2020/08/000-http-error-codes.png";
-//       res.render("error", { err, photo });
-//     });
-//   } else {
-//     app.use(function (err, req, res, next) {
-//       console.log(app.get("env"), err.code, err.message);
-//     });
-//   }
+router.get("/test", function (req, res) {
+  res.end("/test");
+});
+router.post("/test", function (req, res) {
+  console.log("Прошли по пути post/test");
+  res.end("post/test");
+});
+
+module.exports = router;
