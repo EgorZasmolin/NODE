@@ -2,6 +2,16 @@ const express = require("express");
 const favicon = require("express-favicon");
 const fs = require("fs");
 
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: "test.db",
+  define: {
+    timestamps: false,
+  },
+});
+const sqlite = require("sqlite3");
+
 const ejs = require("ejs");
 
 const app = express();
@@ -54,6 +64,48 @@ function addLine(line) {
     }
   );
 }
+
+const User = sequelize.define("user", {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  age: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+});
+sequelize
+  .sync()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => console.log(err));
+
+User.create({
+  name: "Tom",
+  age: 35,
+})
+  .then((res) => {
+    const user = { id: res.id, name: res.name, age: res.age };
+  })
+  .catch((err) => console.log(err));
+
+User.create({
+  name: "Bob",
+  age: 31,
+})
+  .then((res) => {
+    const user = { id: res.id, name: res.name, age: res.age };
+    console.log(user);
+  })
+  .catch((err) => console.log(err));
 
 //error handler
 app.use(function (req, res, next) {
