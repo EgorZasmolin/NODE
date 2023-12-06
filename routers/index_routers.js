@@ -3,26 +3,16 @@ const router = express.Router();
 const register = require("../controllers/register");
 
 router.get("/", (req, res) => {
-  res.end("/");
+  res.sendFile(path.join(__dirname + "/public/index.html"));
 });
-router.post("/", function (req, res) {
-  res.end("/");
-});
+
+router.get("/entries", entries.list);
+router.post("/entry", entry.form);
+
+router.get("/login", login.form);
+router.post("/login", login.submit);
 
 router.get("/register", register.form);
-router.post("/register", function (req, res) {});
-
-router.get("/login", function (req, res) {
-  res.render("login.ejs");
-});
-router.post("/login", function (req, res) {});
-
-router.get("/test", function (req, res) {
-  res.end("/test");
-});
-router.post("/test", function (req, res) {
-  console.log("Прошли по пути post/test");
-  res.end("post/test");
-});
+router.post("/register", register.submit);
 
 module.exports = router;

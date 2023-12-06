@@ -3,6 +3,14 @@ exports.form = (req, res) => {
   res.render("registerForm", {});
 };
 exports.submit = (req, res, next) => {
- if (Игорь есть?)
-  User.create(req.body.user, cb);
+  User.findByEmail(req.body.dataForm.email, (err, user) => {
+    if (!user) {
+      User.create(req.body.user, (err) => {
+        if (err) return next(err);
+      });
+    }
+
+    res.error("Такой пользователь есть уже в базе");
+    res.redirect("/");
+  });
 };
