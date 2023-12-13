@@ -1,7 +1,6 @@
 const express = require("express");
 const favicon = require("express-favicon");
 const fs = require("fs");
-
 const ejs = require("ejs");
 const session = require("express-session");
 
@@ -40,9 +39,9 @@ app.use(favicon(__dirname + "/public/favicon.ico"));
 const filePath = path.join(__dirname, "tmp", "logger.txt");
 fs.writeFile(filePath, "", (err) => {
   if (err) console.error(err);
-  console.log("файл создан");
 });
 
+app.use(userSessions);
 app.use(myRoutes);
 
 function addLine(line) {
