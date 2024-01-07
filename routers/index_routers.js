@@ -3,13 +3,8 @@ const router = express.Router();
 const register = require("../controllers/register");
 const login = require("../controllers/login");
 const entries = require("../controllers/entries");
-const validation = require("../middleware/validate_form");
 
-router.get("/", (req, res) => {
-  res.render("main", {
-    title: "Главная",
-  });
-});
+router.get("/", entries.list);
 
 router.get("/posts", entries.list);
 
