@@ -1,36 +1,31 @@
-exports.getField = (field) => {
-  let value;
-  field.forEach((element) => {
-    value = req.body[element];
-  });
+const getField = (req, parsedField) => {
+  value = req.body[parsedField[0]][parsedField[1]];
   return value;
 };
 
-// getField(field);
-
 function parseField(field) {
-  return field.split(/\[|]/).filter((s) => s);
+  return field.split(/\[|\]/).filter((s) => s);
 }
 
-exports.required = (field, len) => {
-  field = parseField(field);
+exports.required = (field) => {
+  let parsedField = parseField(field);
   return (req, res, next) => {
-    if (getField(req, field)) {
+    if (getField(req, parsedField)) {
       next();
     } else {
-      res.error("Required"); //готовит сообщение пользователю
+      res.error(`Поле ${parsedField.join(" ")} не заполнено`); //готовит сообщение пользователю
       res.redirect("back");
     }
   };
 };
 
 exports.lengthAbove = (field, len) => {
-  field = parseField(field);
+  parsedField = parseField(field);
   return (req, res, next) => {
-    if (getField(req, field).length > len) {
+    if (getField(req, parsedField).length > len) {
       next();
     } else {
-      res.error("Required"); //готовит сообщение пользователю
+      res.error(`Поле ${parsedField.join(" ")} должно быть более 4 знаков`); //готовит сообщение пользователю
       res.redirect("back");
     }
   };
