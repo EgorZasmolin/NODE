@@ -1,3 +1,4 @@
+const logger = require("../logger/index");
 const Entry = require("../models/entry");
 
 exports.list = (req, res, next) => {
@@ -6,11 +7,13 @@ exports.list = (req, res, next) => {
 
     const userData = req.user;
     res.render("entries", { title: "List", entries: entries, user: userData });
+    logger.info("Зашли на главную страницу");
   });
 };
 
 exports.form = (req, res) => {
   res.render("post", { title: "Post" });
+  logger.warning("Зашли на страницу создания постов");
 };
 
 exports.submit = (req, res, next) => {
